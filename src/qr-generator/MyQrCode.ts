@@ -10,13 +10,13 @@ export class MyQrCode {
     private dataText: string;
     private dataBinary: number[];
     private size: number;
-    private marix: boolean[][];
+    private marix: Array<Array<boolean>>;
 
     constructor({
         qrEcc = QrEcc.HIGH,
         minVersion = 1,
         maxVersion = 40,
-        mask = QrCodeMask.auto,
+        mask = QrCodeMask.mask_7,
         boostEcl = true,
     }: {
         qrEcc?: QrEcc;
@@ -30,11 +30,11 @@ export class MyQrCode {
         this.maxVersion = maxVersion;
         this.mask = mask;
         this.boostEcl = boostEcl;
-        this.size=0;
-        this.version=minVersion;
-        this.dataText="";
-        this.dataBinary=[];
-        this.marix=[];
+        this.size = 0;
+        this.version = minVersion;
+        this.dataText = "";
+        this.dataBinary = [];
+        this.marix = [];
     }
 
     public updateParam({
@@ -57,7 +57,7 @@ export class MyQrCode {
         this.boostEcl = boostEcl ?? this.boostEcl;
     }
 
-    public getVersion():number{
+    public getVersion(): number {
         return this.version;
     }
 
@@ -73,42 +73,44 @@ export class MyQrCode {
         return this.dataBinary;
     }
 
-    public encodeText(data: string):void {
+    public encodeText(data: string): void {
         this.dataText = data;
-        const qr = QrCode.encodeSegments(QrSegment.makeSegments(data), this.qrEcc, this.minVersion, this.maxVersion, this.mask, this.boostEcl);
-        this.size=qr.size;
-        this.mask=qr.mask;
-        this.version=qr.version;
-        this.qrEcc=qr.errorCorrectionLevel;
-        this.marix = new Array<boolean[]>(this.size).fill(new Array<boolean>(this.size));
+        const segs = QrSegment.makeSegments(data);
+        const qr = QrCode.encodeSegments(segs, this.qrEcc, this.minVersion, this.maxVersion, this.mask, this.boostEcl);
+        this.size = qr.size;
+        this.mask = qr.mask;
+        this.version = qr.version;
+        this.qrEcc = qr.errorCorrectionLevel;
         for (let y = 0; y < this.size; y++) {
+            this.marix[y] = [];
             for (let x = 0; x < this.size; x++) {
-                this.marix[x][y]=qr.getModule(x,y);
+                this.marix[y][x] = qr.getModule(x, y);
             }
         }
+
     }
 
-    public encodeBinary(data: Array<number>) :void {
-        this.dataBinary=data;
+    public encodeBinary(data: Array<number>): void {
+        this.dataBinary = data;
         const qr = QrCode.encodeSegments([QrSegment.makeBytes(data)], this.qrEcc, this.minVersion, this.maxVersion, this.mask, this.boostEcl);
         this.size = qr.size;
         this.mask = qr.mask;
         this.version = qr.version;
         this.qrEcc = qr.errorCorrectionLevel;
-        this.marix = new Array<boolean[]>(this.size).fill(new Array<boolean>(this.size));
         for (let y = 0; y < this.size; y++) {
+            this.marix[y] = [];
             for (let x = 0; x < this.size; x++) {
-                this.marix[x][y] = qr.getModule(x, y);
+                this.marix[y][x] = qr.getModule(x, y);
             }
         }
     }
 
-    public getMatrix(): boolean[][]{
+    public getMatrix(): boolean[][] {
         return this.marix;
     }
 
-    public getPoint(x:number,y:number):boolean{
-        return this.marix[x][y];
+    public getPoint(x: number, y: number): boolean {
+        return this.marix[y][x].valueOf();
     }
 
 }
