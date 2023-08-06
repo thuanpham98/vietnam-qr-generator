@@ -1,6 +1,6 @@
 {
   "name": "vietnam-qr-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "package support generating qr and draw by canvas in html base on https://github.com/nayuki/QR-Code-generator",
   "keywords": [
@@ -13,7 +13,7 @@
   "author": {
     "email": "pmttmp24@gmail.com",
     "name": "Phạm Minh Thuận",
-    "url": "https://github.com/thuanpham98",
+    "url": "https://github.com/thuanpham98/vietnam-qr-generator",
     "phone": "+84967618471"
   },
     "main": "./dist/vietnam-qr-generator.cjs",

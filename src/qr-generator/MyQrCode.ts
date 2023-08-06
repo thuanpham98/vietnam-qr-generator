@@ -20,10 +20,10 @@ export class MyQrCode {
         boostEcl = true,
     }: {
         qrEcc?: QrEcc;
-        minVersion: number;
-        maxVersion: number;
-        mask: number;
-        boostEcl: boolean;
+        minVersion?: number;
+        maxVersion?: number;
+        mask?: number;
+        boostEcl?: boolean;
     }) {
         this.qrEcc = qrEcc;
         this.minVersion = minVersion;
