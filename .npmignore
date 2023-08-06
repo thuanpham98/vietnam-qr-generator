@@ -3,3 +3,5 @@ src/
 index.html
 *.tgz
 vite.config.ts
+tsconfig.json
+tsconfig.node.json
