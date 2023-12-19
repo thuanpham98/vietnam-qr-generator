@@ -16,17 +16,21 @@
     "url": "https://github.com/thuanpham98/vietnam-qr-generator",
     "phone": "+84967618471"
   },
+  "files": [
+    "dist"
+  ],
   "main": "./dist/vietnam-qr-generator.cjs",
   "module": "./dist/vietnam-qr-generator.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/vietnam-qr-generator.js",
       "require": "./dist/vietnam-qr-generator.cjs"
     }
   },
   "scripts": {
-    "build": "eslint ./src && vite build",
+    "build": "eslint src/ && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
