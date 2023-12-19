@@ -1,32 +1,20 @@
-import { defineConfig } from 'vite';
-import react from "@vitejs/plugin-react-swc";
-import dts from 'vite-plugin-dts'
+import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(), 
-    dts({ insertTypesEntry: true, })
-  ],
+  plugins: [dts({ insertTypesEntry: true })],
   esbuild: {
-    jsxFactory: 'h',
-    jsxFragment: 'Fragment',
-    format:"esm",
+    minifyIdentifiers: true,
+    minifySyntax: true,
+    minifyWhitespace: true,
   },
   build: {
     lib: {
       entry: "src/index.ts",
-      fileName: 'vietnam-qr-generator',
-      formats: ['cjs', 'es'],
-      name: 'vietnam-qr-generator',
-    },
-    rollupOptions: {
-      external: ['react', 'react-dom'],
-      output: {
-        globals: {
-          react: 'React',
-        }
-      },
+      fileName: "vietnam-qr-generator",
+      formats: ["cjs", "es"],
+      name: "vietnam-qr-generator",
     },
     emptyOutDir: true,
     outDir: "dist",
@@ -34,5 +22,5 @@ export default defineConfig({
     cssMinify: true,
     sourcemap: true,
     cssCodeSplit: true,
-  }
-})
+  },
+});
